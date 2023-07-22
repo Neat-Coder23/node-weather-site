@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" href="./imgs/icons8-cloudy-16.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div id="con">
+    {{>header}}
+    <div id="form">
+        <input type="text" placeholder="Enter place name" id="place">
+        <select id="selection">
+            <option value="m">Celsius</option>
+            <option value="f">Fahrenheit</option>
+            <option value="s">Kelvin</option>
+        </select>
+        <input type="submit" value="Get Weather" id="submit-form">
+    </div>
+    <div id="weather"></div>
+    </div>
+    {{>footer}}
+    <script>
+        window.addEventListener('load',()=>{
+            document.getElementById('submit-form').addEventListener('click',()=>{
+                let fcontent = document.getElementById('weather')
+                fcontent.innerHTML="Loading..."
+                fetch(`/weather?address=${document.getElementById('place').value}&unit=${document.getElementById('selection').value}`).then(res=>{
+                    res.json().then(data=>{if(data.error){fcontent.innerHTML=data.error;return;};console.log(data);fcontent.innerHTML = `Place: ${data.place}<br><br>Current temperature: ${data.current_temperature}<br><br>Feels like: ${data.feelslike}<br><br>Forecast: ${data.weather}`})
+                })
+            })
+            
+            
+        })
+
+    </script>
+</body>
+</html>
