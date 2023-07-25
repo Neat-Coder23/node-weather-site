@@ -5,7 +5,7 @@ const geocode = require("./utils/geocode");
 const currentWeather = require("./utils/getCurrentWeather");
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 const publicDir = path.join(__dirname, "../public");
 const viewsPath = path.join(__dirname, "../templates/views");
@@ -80,6 +80,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(process.env.port || port, () => {
+app.listen(port, () => {
   console.log(`Server listening at port: %s`, port);
 });
